@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "115445986141",
+    "project_id": "sentimentanalysisinchat",
+    "storage_bucket": "sentimentanalysisinchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115445986141:android:c99de8460844f3d4f9aeb4",
+        "android_client_info": {
+          "package_name": "com.example.nlpproje"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115445986141-7g1h41qc2rvkcqb4ka966ceba5f6o2r9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRTrI1N6-Hwayvd3E95lS_WcQxfINp1j8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115445986141-7g1h41qc2rvkcqb4ka966ceba5f6o2r9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
