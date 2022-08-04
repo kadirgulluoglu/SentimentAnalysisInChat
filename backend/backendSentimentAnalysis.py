@@ -1,6 +1,4 @@
 
-##                 Abdulkadir GÜLLÜOĞLU Meryem AKHAN
-##                      4095                4020
 import re
 import numpy as np 
 import pandas as pd # DATA SETİNİ OKUMA VE DÜZENLEME
