@@ -73,7 +73,7 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                     SizedBox(width: size.width * 0.02),
                     Text(
-                      "Meryem Akhan",
+                      "Kadir Güllüoğlu",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
