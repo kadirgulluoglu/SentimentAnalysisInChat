@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:nlpproje/ChatPage.dart';
-import 'package:nlpproje/HomeScreen.dart';
-import 'package:nlpproje/login.dart';
+import 'package:nlpproje/screens/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'screens/chat_page.dart';
 
 bool rememberme = true;
 Future<void> main() async {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Duygu Analizi',
-      home: rememberme ? ChatPage() : Login(),
+      home: rememberme ? const ChatPage() : Login(),
     );
   }
 }

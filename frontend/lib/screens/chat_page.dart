@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nlpproje/Configuration.dart';
-import 'package:nlpproje/user_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../models/user_model.dart';
+import '../theme/colors.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     setState(() {
       getFirebase();
-      duygugetir();
+      _getSentiment();
     });
     mesajlarigetir();
   }
@@ -49,7 +50,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    duygugetir();
+    _getSentiment();
     genelduygubosmu();
     return userModel!.name != null
         ? Scaffold(
@@ -58,13 +59,13 @@ class _ChatPageState extends State<ChatPage> {
               backgroundColor: primaryColorr,
               title: Container(
                 width: size.width,
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 color: primaryColorr,
                 height: size.height * .08,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       child: Icon(
                         Icons.person,
                         color: Colors.black26,
@@ -72,7 +73,7 @@ class _ChatPageState extends State<ChatPage> {
                       backgroundColor: Colors.white,
                     ),
                     SizedBox(width: size.width * 0.02),
-                    Text(
+                    const Text(
                       "Kadir Güllüoğlu",
                       style: TextStyle(
                           color: Colors.white,
@@ -82,14 +83,14 @@ class _ChatPageState extends State<ChatPage> {
                     SizedBox(width: size.width * 0.02),
                     bosmu
                         ? Text("Genel Duygu:" + genelduygu.toString())
-                        : Text(""),
+                        : const Text(""),
                   ],
                 ),
               ),
             ),
             backgroundColor: Colors.white,
             body: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/background.jpg"),
                       fit: BoxFit.cover)),
@@ -98,18 +99,18 @@ class _ChatPageState extends State<ChatPage> {
                   padding: const EdgeInsets.all(0.0),
                   child: ListView(
                     children: [
-                      Container(
+                      SizedBox(
                           height: size.height * .8,
                           child: SingleChildScrollView(
-                              reverse: true, child: ShowMessages())),
+                              reverse: true, child: showMessages())),
                       Container(
                         width: size.width,
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         color: Colors.white,
                         child: Row(
                           children: [
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 width: size.width * .5,
                                 height: size.height * .06,
                                 child: TextField(
@@ -138,12 +139,12 @@ class _ChatPageState extends State<ChatPage> {
                                     mesajlarigetir();
                                     final url =
                                         Uri.parse('http://10.0.2.2:5000/nlp');
-                                    final responsepost = await http.post(url,
+                                    await http.post(url,
                                         body: json.encode(
                                             {'text': msg.text.toString()}));
 
-                                    final responseget = await http.get(url);
-                                    final decoded = jsonDecode(responseget.body)
+                                    final responseGet = await http.get(url);
+                                    final decoded = jsonDecode(responseGet.body)
                                         as Map<String, dynamic>;
 
                                     setState(() {
@@ -212,7 +213,7 @@ class _ChatPageState extends State<ChatPage> {
             ? setState(() {
                 mesaj = mesaj! + doc["msg"].toString() + " ";
               })
-            : Text("");
+            : const Text("");
       });
       setState(() {
         mesaj;
@@ -220,7 +221,7 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
-  duygugetir() async {
+  _getSentiment() async {
     await FirebaseFirestore.instance
         .collection('Mesajlar')
         .orderBy("time")
@@ -231,7 +232,7 @@ class _ChatPageState extends State<ChatPage> {
             ? setState(() {
                 genelduygu = doc["genelResult"].toString();
               })
-            : Text("");
+            : const Text("");
       });
       setState(() {
         genelduygu;
@@ -250,7 +251,7 @@ class _ChatPageState extends State<ChatPage> {
             });
   }
 
-  Widget ShowMessages() {
+  Widget showMessages() {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("Mesajlar")
@@ -267,7 +268,7 @@ class _ChatPageState extends State<ChatPage> {
           return ListView.builder(
               primary: true,
               shrinkWrap: true,
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, i) {
                 QueryDocumentSnapshot x = snapshot.data!.docs[i];
@@ -283,19 +284,21 @@ class _ChatPageState extends State<ChatPage> {
                             color: userModel!.email.toString() ==
                                     x["email"].toString()
                                 ? primaryColorr.withOpacity(.5)
-                                : Color(0xffAC7D88).withOpacity(.9),
+                                : const Color(0xffAC7D88).withOpacity(.9),
                             borderRadius: BorderRadius.circular(10)),
-                        padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(left: 10, top: 10, right: 10),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               x["msg"],
-                              style: TextStyle(fontWeight: FontWeight.w500),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
                             ),
                             userModel!.email.toString() == x["email"].toString()
-                                ? Text("")
+                                ? const Text("")
                                 : Text(x["sentimentResult"]),
                             Text(x['saat']),
                           ],

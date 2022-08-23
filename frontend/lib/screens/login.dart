@@ -2,13 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nlpproje/ChatPage.dart';
-import 'package:nlpproje/main.dart';
+import 'package:nlpproje/screens/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Configuration.dart';
-import 'HomeScreen.dart';
-import 'register.dart';
+import '../theme/colors.dart';
+import 'chat_page.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -17,10 +15,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool beniHatirla = false;
-  bool isObscure = true;
-  bool isLoading = false;
-
   //key
   final _formkey = GlobalKey<FormState>();
 
@@ -29,11 +23,78 @@ class _LoginState extends State<Login> {
   final TextEditingController _passwordcontroller = new TextEditingController();
   late SharedPreferences logindata;
 
+  bool beniHatirla = false;
+  bool isObscure = true;
+  bool isLoading = false;
+
   @override
   void dispose() {
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: GestureDetector(
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white,
+                    Colors.white,
+                  ],
+                ),
+              ),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: size.width * 0.07,
+                  vertical: size.height * 0.14,
+                ),
+                child: Form(
+                  key: _formkey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: size.width * 0.6,
+                        child: FittedBox(
+                          child: Text(
+                            'Giriş Yap',
+                            style: TextStyle(
+                                color: primaryColorr,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.10),
+                      buildEposta(),
+                      SizedBox(height: size.height * 0.02),
+                      buildSifre(),
+                      buildSifrenimiunuttun(),
+                      buildBenihatirla(),
+                      SizedBox(height: size.height * 0.02),
+                      buildLoginButton(),
+                      buildSignupButton(),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildEposta() {
@@ -48,14 +109,14 @@ class _LoginState extends State<Login> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: primaryColorr,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
-                BoxShadow(
+                const BoxShadow(
                   color: Colors.white,
                   blurRadius: 6,
                   offset: Offset(0, 2),
@@ -81,13 +142,13 @@ class _LoginState extends State<Login> {
             controller: _emailcontroller,
             keyboardType: TextInputType.emailAddress,
             cursorColor: Theme.of(context).disabledColor,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
             ),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 15),
-                prefixIcon: Icon(
+                contentPadding: const EdgeInsets.only(top: 15),
+                prefixIcon: const Icon(
                   Icons.email,
                   color: Colors.white,
                 ),
@@ -112,14 +173,14 @@ class _LoginState extends State<Login> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: primaryColorr,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
-                BoxShadow(
+                const BoxShadow(
                   color: Colors.white,
                   blurRadius: 6,
                   offset: Offset(0, 2),
@@ -144,13 +205,13 @@ class _LoginState extends State<Login> {
             controller: _passwordcontroller,
             obscureText: isObscure,
             textInputAction: TextInputAction.done,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
             ),
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(top: 15),
+                contentPadding: const EdgeInsets.only(top: 15),
                 border: InputBorder.none,
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.lock,
                   color: Colors.white,
                 ),
@@ -179,7 +240,7 @@ class _LoginState extends State<Login> {
       alignment: Alignment.centerRight,
       child: FlatButton(
         onPressed: () {},
-        padding: EdgeInsets.only(right: 0),
+        padding: const EdgeInsets.only(right: 0),
         child: Text(
           'Şifremi Unuttum',
           style: TextStyle(
@@ -223,27 +284,29 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget buildLoginbuton() {
+  Widget buildLoginButton() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25),
+      padding: const EdgeInsets.symmetric(vertical: 25),
       width: double.infinity,
-      child: RaisedButton(
-        elevation: 5,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 5,
+          primary: primaryColorr,
+          padding: const EdgeInsets.all(15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
         onPressed: () {
           login(_emailcontroller.text, _passwordcontroller.text);
         },
-        padding: EdgeInsets.all(15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        color: primaryColorr,
-        child: Text('Giriş',
+        child: const Text('Giriş Yap',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }
 
-  Widget buildSignupbuton() {
+  Widget buildSignupButton() {
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacement(
@@ -272,69 +335,6 @@ class _LoginState extends State<Login> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: GestureDetector(
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white,
-                    Colors.white,
-                  ],
-                ),
-              ),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.07,
-                  vertical: size.height * 0.14,
-                ),
-                child: Form(
-                  key: _formkey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: size.width * 0.6,
-                        child: FittedBox(
-                          child: Text(
-                            'Giriş Yap',
-                            style: TextStyle(
-                                color: primaryColorr,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.10),
-                      buildEposta(),
-                      SizedBox(height: size.height * 0.02),
-                      buildSifre(),
-                      buildSifrenimiunuttun(),
-                      buildBenihatirla(),
-                      SizedBox(height: size.height * 0.02),
-                      buildLoginbuton(),
-                      buildSignupbuton(),
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   void login(String email, String password) async {
     if (_formkey.currentState!.validate()) {
       setState(() {
@@ -347,7 +347,7 @@ class _LoginState extends State<Login> {
                 saveSharedPreferences(),
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => ChatPage()),
+                  MaterialPageRoute(builder: (context) => const ChatPage()),
                 ),
               })
           .catchError((e) {

@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nlpproje/Configuration.dart';
-import 'package:nlpproje/user_model.dart';
 
+import '../models/user_model.dart';
+import '../theme/colors.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
@@ -21,11 +21,10 @@ class _SignUpState extends State<SignUp> {
   final _formkey = GlobalKey<FormState>();
 
   //textcontrolller
-  final TextEditingController namecontroller = new TextEditingController();
-  final TextEditingController emailcontroller = new TextEditingController();
-  final TextEditingController passwordcontroller = new TextEditingController();
-  final TextEditingController passwordagaincontroller =
-      new TextEditingController();
+  final TextEditingController namecontroller = TextEditingController();
+  final TextEditingController emailcontroller = TextEditingController();
+  final TextEditingController passwordcontroller = TextEditingController();
+  final TextEditingController passwordagaincontroller = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
   bool isObscure = true;
   bool isLoading = false;
@@ -44,13 +43,13 @@ class _SignUpState extends State<SignUp> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: primaryColorr,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 6,
@@ -60,7 +59,7 @@ class _SignUpState extends State<SignUp> {
           height: 60,
           child: TextFormField(
             validator: (value) {
-              RegExp regexp = new RegExp(r'^.{6,}$');
+              RegExp regexp = RegExp(r'^.{6,}$');
               if (value!.isEmpty) {
                 return "Ad Boş girilemez";
               }
@@ -71,11 +70,12 @@ class _SignUpState extends State<SignUp> {
             },
             controller: namecontroller,
             keyboardType: TextInputType.text,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 15),
-                prefixIcon: Icon(Icons.account_circle, color: Colors.white),
+                contentPadding: const EdgeInsets.only(top: 15),
+                prefixIcon:
+                    const Icon(Icons.account_circle, color: Colors.white),
                 hintText: "Ad Soyad",
                 hintStyle:
                     TextStyle(color: Theme.of(context).secondaryHeaderColor)),
@@ -97,13 +97,13 @@ class _SignUpState extends State<SignUp> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: primaryColorr,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 6,
@@ -127,11 +127,11 @@ class _SignUpState extends State<SignUp> {
             },
             controller: emailcontroller,
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 15),
-              prefixIcon: Icon(Icons.email, color: Colors.white),
+              contentPadding: const EdgeInsets.only(top: 15),
+              prefixIcon: const Icon(Icons.email, color: Colors.white),
               hintText: "Eposta",
               hintStyle:
                   TextStyle(color: Theme.of(context).secondaryHeaderColor),
@@ -154,13 +154,13 @@ class _SignUpState extends State<SignUp> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: primaryColorr,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 6,
@@ -170,7 +170,7 @@ class _SignUpState extends State<SignUp> {
           height: 60,
           child: TextFormField(
             validator: (value) {
-              RegExp regexp = new RegExp(r'^.{6,}$');
+              RegExp regexp = RegExp(r'^.{6,}$');
               if (value!.isEmpty) {
                 return "Şifre Boş girilemez";
               }
@@ -185,11 +185,11 @@ class _SignUpState extends State<SignUp> {
             controller: passwordcontroller,
             keyboardType: TextInputType.visiblePassword,
             obscureText: isObscure,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 15),
-                prefixIcon: Icon(Icons.lock, color: Colors.white),
+                contentPadding: const EdgeInsets.only(top: 15),
+                prefixIcon: const Icon(Icons.lock, color: Colors.white),
                 hintText: "Şifre",
                 hintStyle:
                     TextStyle(color: Theme.of(context).secondaryHeaderColor)),
@@ -211,13 +211,13 @@ class _SignUpState extends State<SignUp> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
               color: primaryColorr,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 6,
@@ -238,11 +238,11 @@ class _SignUpState extends State<SignUp> {
             controller: passwordagaincontroller,
             keyboardType: TextInputType.visiblePassword,
             obscureText: isObscure,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 15),
-                prefixIcon: Icon(Icons.lock, color: Colors.white),
+                contentPadding: const EdgeInsets.only(top: 15),
+                prefixIcon: const Icon(Icons.lock, color: Colors.white),
                 hintText: "Şifre Tekrar",
                 hintStyle: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
@@ -253,22 +253,24 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget buildKayitolbuton() {
+  Widget buildSignupButton() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25),
+      padding: const EdgeInsets.symmetric(vertical: 25),
       width: double.infinity,
-      child: RaisedButton(
-        elevation: 5,
-        child: Text('Kayıt Ol',
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 5,
+          primary: primaryColorr,
+          padding: const EdgeInsets.all(15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+        child: const Text('Kayıt Ol',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         onPressed: () {
           signUp(emailcontroller.text, passwordcontroller.text);
         },
-        padding: EdgeInsets.all(15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        color: primaryColorr,
       ),
     );
   }
@@ -312,7 +314,7 @@ class _SignUpState extends State<SignUp> {
             Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -320,7 +322,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(
                   horizontal: size.width * 0.07,
                   vertical: size.height * 0.14,
@@ -330,7 +332,7 @@ class _SignUpState extends State<SignUp> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         width: size.width * 0.6,
                         child: FittedBox(
                           child: Text(
@@ -355,15 +357,15 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         height: size.height * 0.02,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       isLoading
                           ? Container(
-                              padding: EdgeInsets.symmetric(vertical: 25),
+                              padding: const EdgeInsets.symmetric(vertical: 25),
                               child: CircularProgressIndicator(
                                 color: primaryColorr,
                               ),
                             )
-                          : buildKayitolbuton(),
+                          : buildSignupButton(),
                       buildSignInbuton(),
                     ],
                   ),
