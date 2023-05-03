@@ -1,4 +1,6 @@
 # Sentiment-analysis-in-chat
+Analyze the emotional state of the other person according to the message sent while messaging
+
 ## Flutter with python background Flask and http
 **First open backendSentimentAnalysis.py in vscode in debug mode**</br>
 **And run flutter with virtual machine**</br>
